@@ -1,0 +1,41 @@
+
+Important Note-For Better Experience, Your Internet Connection will be Always on. because I have used many icons and CDN paths in this Project. if the internet will off, the Icons and CDN paths will not work properly.
+
+
+
+1)This Project is made in SpringBoot, So for Run this Project You import this Project in the SpringBoot Enable Software.
+
+
+
+2)After Successfully Import, Now you will have to Open Properties File and Set the Database Configuration according to Your Database Software. By Default, I have used Mysql Database.
+
+
+
+3)Database Settings are-
+
+
+a)spring.datasource.url=jdbc:mysql://localhost:3306/system (Change Settings according your Database)
+
+b)spring.datasource.username=root (Change Settings accordingly)
+
+c)spring.datasource.password=root (Change Settings accordingly)
+
+d)spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver (Change Settings according your Database)
+
+e)spring.jpa.hibernate.ddl-auto=update
+
+f)spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL5Dialect (Change Settings according your Database)
+
+g)spring.jpa.show-sql=true
+
+
+
+4)I have Used Hibernate, so you don't worry to create Table Manually. All Table's Creation Procedures will Successfully be Done automatically.
+
+
+
+5)I have used Email Class in our Project. so you can change Emails Settings According to your Email Password and Email Address.
+
+
+
+6)All Project's Information is Available on the About Page that is Available on Home Page. Please Visit Once.
