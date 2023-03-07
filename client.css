@@ -1,0 +1,17 @@
+.body
+{
+	margin:0px;
+	padding:0px;
+}
+.search
+{
+	postion:relative;
+}
+.result
+{
+	postion:absolute;
+	width:100%;
+	padding:10px;
+	border:1px  gray;
+	display:none;
+}
