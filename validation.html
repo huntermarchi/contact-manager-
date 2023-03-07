@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Validation</title>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet" th:href="@{Bootstrap/bootstrap.css}">
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script type="text/javascript" th:src="@{Jquery/jquery-3.6.0.js}"></script>
+<style>
+.container
+{
+   min-height:440px;
+}
+.l
+{
+  margin-top:20px;
+}
+</style>
+</head>
+<body>
+<h4 align="center">Regestration Form</h4>
+<div class="container mt-4 border border-dark">
+<form th:action="@{/process}" method="post">
+<div class="mb-3">
+<div th:if="${error}==true" th:text="'Invalid Captcha'" class="alert alert-danger" role="alert">
+</div>
+    <label for="exampleInputName" class="form-label">Name</label>
+    <input type="text" class="form-control" th:classappend="${#fields.hasErrors('emp.Ename')?'is-invalid':''}" name="Ename" id="exampleInputName" aria-describedby="emailHelp" placeholder="Enter Name">
+     <div th:each="e:${#fields.errors('emp.Ename')}" th:text="${e}"  id="validationServerUsernameFeedback" class="invalid-feedback"></div>
+  </div>
+    <div class="mb-3">
+    <label for="exampleInputPassword1" class="form-label">Password</label>
+    <input type="password" class="form-control" th:classappend="${#fields.hasErrors('emp.Epass')?'is-invalid':''}" name="Epass" id="exampleInputPassword1" placeholder="Enter Password">
+     <div th:each="e1:${#fields.errors('emp.Epass')}" th:text="${e1}" id="validationServerUsernameFeedback" class="invalid-feedback"></div>
+  </div>
+    <div class="col-2">
+     <label for="captcha" class="form-label">Enter Captcha</label><br>
+    <input type="text" class="form-control" th:classappend="${#fields.hasErrors('emp.captcha')?'is-invalid':''}" name="captcha" id="uy" aria-describedby="emailHelp" placeholder="Enter Captcha">
+     <div th:each="e4:${#fields.errors('emp.captcha')}" th:text="${e4}"  id="validationServerUsernameFeedback" class="invalid-feedback"></div>
+  </div>
+    <div class="l"><img th:src="@{captcha2}"/></div>
+  <div class="mb-3 mt-2 form-check">
+    <input type="checkbox" class="form-check-input" th:classappend="${#fields.hasErrors('emp.ch')?'is-invalid':''}" id="exampleCheck1" name="ch">
+    <label class="form-check-label" for="exampleCheck1">Check me out</label>
+  </div>
+  <button type="submit" class="btn btn-primary" >Submit</button>
+</form>
+</div>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>File Uploading</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <script type="text/javascript" th:src="@{Jquery/jquery-3.6.0.js}"></script>
+            <script type="text/javascript">
+                $(document).ready(function()
+                {
+                    $("#op").on('change',function()
+                    {
+                         var file=$(this).get(0).files[0];
+                         if(file)
+                         {
+                             var reader=new FileReader();
+                             reader.onload=function()
+                             {
+                                 $("#prev").attr('src',reader.result);
+                             }
+                             reader.readAsDataURL(file);z
+                         } 
+                     });
+                     $("#myform").on('submit',function(e)
+                     {
+                         e.preventDefault();
+                         var fd=new FormData(this);
+                         $.ajax({
+                            url:"upload1",
+                            type:"POST",
+                            processData:false,
+                            contentType:false,
+                            data:fd,
+                            success:function(response)
+                            {
+                                $("#success").html(response);
+                            }
+                         });
+                     });
+                });
+           </script>
+    </head>
+    <body>
+         <table align="center">
+            <tr>
+                <td><img th:src="@{Images/Demo.jpg}" alt="Upload Image" height="110" width="110" id="prev"/></td>
+            </tr>
+        </table>
+        <h1 align="center">Upload File on Server</h1>
+        <h3 align="center" style="color:red;">only jpeg&nbsp,&nbsppng,&nbspgif&nbspFiles can be Uploaded</h3>
+        <h3 align="center" style="color:red;">Max File Size 50kb</h3>
+        <div style="margin:auto;border:2px solid black; width:350px;height:70px;background-color:#7FFF00;">
+            <form id="myform" enctype="multipart/form-data">
+                <input type="file" name="files" id="op" style="padding-top:7px;padding-left:90px"/><br>
+            <input type="submit" value="Upload" style=" margin-left:150px;margin-top:10px;"/>
+            </form><br>
+            <a style="margin-left:80px" th:href="@{/down}">Download Current File</a>
+        </div>
+        <div id="success"></div><br><br>
+        <hr>
+    </body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet" th:href="@{Css/mystyle.css}">
+<link rel="stylesheet" th:href="@{Bootstrap/bootstrap.css}">
+<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+<title>Reset Pssword</title>
+<script>
+function load1()
+{
+	var z=document.getElementById("staticEmail2");
+	if(z.type==="password")
+	{
+	     z.type="text";	
+	}
+	else
+	{
+		z.type="password";
+	}
+	}
+</script>
+</head>
+<body>
+<nav th:replace=base::Header></nav>
+<div class="container d-flex justify-content-center align-items-center vh-100">
+<div class="row">
+<div class="col-md-6 offset-md-4">
+<div class="text-center">
+        <img class="mb-4" th:src="@{../Images/ee.png}" alt="" width="75" height="80" id="img"></div>
+  <div th:if="${session.message}" class="alert text-center " th:classappend="${session.message.type}" role="alert">
+<p th:text="${session.message.content}"></p>
+<th:block th:text="${#session.removeAttribute('message')}"></th:block>
+</div>
+  <form class="row g-3" th:action="@{/newPass}" method="post">
+  <div class="col-auto">
+    <label for="staticEmail2" class="form-label">Enter New Password</label>
+    <input type="password"  class="form-control" id="staticEmail2" placeholder="xxxxxxx" name="pass"/><input type="checkbox" id="cbox" onclick="load1()" class="mt-4"/>Show Password
+  </div>
+  <div class="col-auto">
+    <button type="submit" class="btn btn-primary mb-3">Save Changes</button>
+  </div>
+</form>
+</div>
+</div>
+</div>
+</body>
+</html>

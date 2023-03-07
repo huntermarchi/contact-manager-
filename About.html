@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet" th:href="@{Css/mystyle.css}">
+<link rel="stylesheet" th:href="@{Bootstrap/bootstrap.css}">
+<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+<title>Insert title here</title>
+</head>
+<body>
+<nav th:replace=base::Header></nav>
+<div class="accordion mt-5" id="accordionExample" >
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingOne">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+        About WebApplication
+      </button>
+    </h2>
+    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+       <strong>Smart Contact Manager is a WebApplication Software.In this Software you can easily manage your contacts.This Software is made in SpringBoot and I have used Hibernate for Database Management.</strong>
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingTwo">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+        How to Store Contacts
+      </button>
+    </h2>
+    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <strong>1-</strong>First we will have to register ourself.
+        <br><strong>2-</strong>For register,we click the Signup Button that is in Home Page.
+        <br><strong>3-</strong>Now,we will enter the Name,password,Email in the Text Box.(Note-Email must be Unique.Duplicte Email will not be Accept.Password should contain 1 Uppercase Letter,1 Special Symbol,1 Digit with no Space)
+        <br><strong>4-</strong>After Signup Process,Now you can Login.
+        <br><strong>5-</strong>For Login,we will have to click the Login Button in the Navbar Menu.
+        <br><strong>6-</strong>In Login Page,You will enter the valid Email Id and Password that was Enter during the Regestration Process.
+        <br><strong>7-</strong>If you have Forgeted the Password then you can click (Forget Password)Button.
+        <br><strong>8-</strong>In Forget Password Section,You will enter the valid Email Id that was Enter during the Regestration Process.After that,You will Receive a OTP in your Registerd Email Account.After that,You will Enter the Otp and move to the Next Process.Now You will Enter the New Password and Click the Save Button.Hurray! Your Password has Changed Successfully.
+        <br><strong>9-</strong>After Successfully Login,you can see your Dashboard
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingThree">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+        Security in SmartContact Manager
+      </button>
+    </h2>
+    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <strong>1)</strong>CSRF Enable that means Every Page will Generate a Unique Number(Attackers will not Generate the Dummy Code for Access the LoginPage and Dump the Unused Data into the Database) 
+        <br><strong>2)</strong>Once the User logedOut Successfully,you can not access the same page if Your page is Open in another browser or another tab.
+        <br><strong>3)</strong>You can not Directly Access the User Dashboard Page withOut Login i.e Url is safe and Secure.
+        <br><strong>4)</strong>By Default Every User has a User Role.
+        <br><strong>5)</strong>Admin can see the User Records from own Dashboard.(Note.This Feature is Temporary not Available but You can create a Dummy Record in the DataBase and Set the Role "ROLE_ADMIN" in Role Column)
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
+</body>
+</html>
