@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<base href="/">
+<meta charset="ISO-8859-1">
+<link rel="stylesheet" th:href="@{../Bootstrap/bootstrap.css}">
+<link rel="stylesheet" th:href="@{../Css/client.css}">
+<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+<title>Show Contact</title>
+<script type="text/javascript" th:src="@{../Jquery/jquery-3.6.0.js}"></script>
+            <script type="text/javascript">
+                $(document).ready(function()
+                {
+                	$(document).on('click','.h',function(e)
+                	{
+                	  var z=$(this).data('id1');
+                	  $.ajax({
+                		 url:"/user/updateForm",
+                		 method:"POST",
+                		 data:{"id":z},
+                		 success:function(response)
+                		 {
+                			 
+                			 $("#op1").html(response);
+                		 }
+                	  });
+                	});
+                	$("#search1").on('keyup',function(){
+                		var z=$(this).val();
+                		if(z=="")
+                		{
+                		   $(".result").hide();	
+                		}
+                		$.ajax({
+                			url:"http://localhost:8080/search/"+z,
+                			type:"GET",
+                			success:function(response)
+                			{
+                				$(".result").html("<div class='list-group'><a href='/user/showProfile/"+response[0].cid+"' class='list-group-item list-group-item-action'>"+response[0].email+"</a></div>");
+                				$(".result").show();
+                		    }
+                		});
+                	});
+                });
+                </script>
+</head>
+<body>
+<nav th:replace="normal/client::Dashboard"></nav>
+<div class="container" style="padding-top:8%;">
+<h5 align="center" class="text-primary">Your Contact List</h5>
+<div class="container search mb-5">
+<input type="text" class="form-control" id="search1"  placeholder="Search your Contacts"/>
+<div class="result">
+
+</div>
+</div>
+<table class="table table-responsive table-striped table-hover table-bordered">
+  <thead class="table-dark">
+    <tr>
+      <th scope="col" class="text-center">SNo</th>
+      <th scope="col" class="text-center">Contact_Name</th>
+      <th scope="col" class="text-center">Email</th>
+      <th scope="col" class="text-center">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr th:each="d:${show}">  
+      <td class="text-center" th:text="'SMC'+${d.cid}"></td>
+      <td class="text-center" th:text="${d.cname}"></td>
+      <td><a class="text-center" th:href="@{/user/showProfile/{if1}(if1=${d.cid})}"><span style="margin-left:30%;" th:text="${d.email}"></span></a></td>
+      <td>
+      <input type="button" value="Edit" class="btn btn-primary h" style="margin-left:20%;"  th:attr="data-id1=${d.cid}"></input>
+      <input type="button" value="Delete" class="btn btn-danger" style="margin-left:20%;" th:onclick="|itemdelete(${d.cid})|"></input>
+      </td>
+    </tr>
+  </tbody>
+</table>
+ <nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center">
+    <li class="page-item"><a th:if="${current!=0}" class="page-link" th:href="@{/user/show-Contact/{n1}(n1=${current-1})}" tabindex="-1" aria-disabled="true">Previous</a></li>
+    <li th:classappend="${current==i-1?'active':''}"   th:each="i:${#numbers.sequence(1,total)}" class="page-item"><a class="page-link" th:if="${current==-1?'disabled':''}" th:href="@{/user/show-Contact/{p}(p=${i-1})}"><span th:text="${i}"></span></a></li>
+    <li class="page-item"><a th:if="${current+1!=total}" class="page-link" th:href="@{/user/show-Contact/{n}(n=${current+1})}">Next</a></li>
+  </ul>
+</nav>
+</div>
+<hr>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+function itemdelete(cid)
+{
+  swal({
+	  title: "Are you sure?",
+	  text: "Once deleted, you will not be able to recover this imaginary Data!",
+	  icon: "warning",
+	  buttons: true,
+	  dangerMode: true,
+	}).then((willDelete) => 
+	{
+	  if (willDelete) 
+	  {
+	      window.location="/user/delete/"+cid;
+	  }
+	  else
+	  {
+	    swal("Your imaginary file is safe!");
+	  }
+	});
+}
+</script>
+<div id="op1">
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
+</body>
+</html>

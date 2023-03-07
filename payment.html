@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link rel="stylesheet" th:href="@{../Bootstrap/bootstrap.css}">
+<link rel="stylesheet" th:href="@{../Css/client.css}">
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+<title>Complete Profile</title>
+<script type="text/javascript" th:src="@{../Jquery/jquery-3.6.0.js}"></script>
+            <script type="text/javascript">
+                $(document).ready(function()
+                {
+                	$("#paynow").on('click',function(e)
+                	{
+                	    e.preventDefault();
+                	    var d=$("#pay").val();
+                	    if(d==""||d==null)
+                	    {
+                	    	alert("Please Enter a Amount");
+                	    }
+                	    
+                	    $.ajax({
+                	    	url:"/payment",
+                	    	type:"POST",
+                	    	data:JSON.stringify({amount:d}),
+                	    	dataType:"json",
+                	    	contentType:"application/json",		
+                	    	success:function(response)
+                	    	{
+                	    		if(response.status=='created')
+                	    		{
+                	    		  var options =
+                	    		  {
+                	    		    "key": "rzp_test_I1RpzPpF69qLm5", // Enter the Key ID generated from the Dashboard
+                	    		    "amount": response.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+                	    		    "currency": "INR",
+                	    			"name": "InfoTech pvt.Ltd",
+                	    			"description": "Donation",
+                	    			"image": "https://www.pngfind.com/pngs/m/683-6834184_java-logo-png-java-icon-transparent-png.png",
+                	    			"order_id": response.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+                	    			"handler": function (response)
+                	    			{
+           
+                	    				generatePayment(response.razorpay_payment_id,response.razorpay_order_id,"Paid");
+                	    				swal({
+                	    					  title: "Good job!",
+                	    					  text: "Payment has Successfull done!",
+                	    					  icon: "success",
+                	    					  button: "Ok!",
+                	    					});
+                	    			},
+                	    		    "prefill": 
+                	    		    {
+                	    				"name": "",
+                	    				 "email": "",
+                	    				 "contact": ""
+                	    			},
+                	    		    "notes":{
+                	    				      "address": "LearnJava Cop."
+                	    				    },
+                	    			"theme": {
+                	    				        "color": "#3399cc"
+                	  
+                	    				},
+                	    		  };
+                	    				var rzp1 = new Razorpay(options);
+                	    				rzp1.on('payment.failed', function (response)
+                	    				{
+                	    					
+                	    					swal({
+                  	    					  title: "Error!",
+                  	    					  text: "Payment has Failed!",
+                  	    					  icon: "error",
+                  	    					  button: "Ok!",
+                  	    					});
+                	    				});
+                	    				rzp1.open();
+                	    		}
+                	    	},
+                	    	error:function(error)
+                	    	   {       					
+                	    		swal({
+                  	    			   title: "Error!",
+                  	    			   text: "Something Went Wrong",
+                  	    			   icon: "error",
+                  	    			   button: "Ok!",
+                	    			});
+                	    	    }
+                	    	
+                	    		});
+                	});
+                });
+                function generatePayment(p,o,s)
+    	    	{
+    	    		$.ajax({
+    	    			url:"/paymentUpdate",
+    	    			type:"POST",
+    	    		    data:JSON.stringify({pi:p,oi:o,s:s}),
+    	    		    dataType:"json",
+    	    		    contentType:"application/json",
+    	    		});
+    	    	}
+                </script>
+</head>
+</head>
+<body>
+<nav th:replace="normal/client::Dashboard"></nav>
+<div class="container d-flex justify-content-center mt-5" >
+  <div class="col-md-4 text-center">
+  <label for="pay" class="form-label text-dark fw-bold">Donate Us</label>
+  <input type="text" id="pay" class="form-control" placeholder="Enter Amount"/>
+  <input type="submit" class="btn btn-warning mt-2" value="pay" id="paynow"/>
+  </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<base href="/">
+<meta charset="ISO-8859-1">
+<link rel="stylesheet" th:href="@{../Bootstrap/bootstrap.css}">
+<link rel="stylesheet" th:href="@{../Css/client.css}">
+<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+<title>Update</title>
+<script type="text/javascript" th:src="@{../Jquery/jquery-3.6.0.js}"></script>
+            <script type="text/javascript">
+                $(document).ready(function()
+                {
+                	$("#up5 [type='file']").on('change',function(){
+                		var z=$(this).get(0).files[0];
+                		if(z)
+                		{
+                		    var reader=new FileReader();
+                		    reader.onload=function()
+                		    {
+                		    	$("#img5").attr('src',reader.result);
+                		    }
+                		    reader.readAsDataURL(z);
+                		}
+                	});
+                });
+                </script>
+</head>
+<body>
+<h4 align="center" style="margin-left:100px;">Update Records</h4>
+<div class="conatiner">
+<div class="row">
+     <div class="col-md-5 offset-md-4">
+        <div style="padding:50px;">
+        <div class="text-center">
+        <img class="mb-4" th:src="@{/Images/{im}(im=${contact.image})}" alt="" width="75" height="80" id="img5"></div>
+        <div th:if="${session.message}" class="alert text-center " th:classappend="${session.message.type}" role="alert">
+<p th:text="${session.message.content}"></p>
+<th:block th:text="${#session.removeAttribute('message')}"></th:block>
+</div>
+        <form th:action="@{/user/editRecord}" method="post" enctype="multipart/form-data">
+        <div class="mb-3">
+  <label for="exampleFormControl" class="form-label text-dark"><i class="fas fa-user"></i>&nbsp&nbspName<span class="text-warning">*</span></label>
+  <input type="text" class="form-control"  name="cname" th:classappend="${#fields.hasErrors('contact.cname')?'is-invalid':''}" id="exampleFormControl" placeholder="User" th:value="${contact.cname}">
+  <div th:each="f:${#fields.errors('contact.cname')}" th:text="${f}"  id="validationServerUsernameFeedback" class="invalid-feedback"></div>
+</div>
+ <input type="hidden" name="cid" th:value=${contact.cid}></input>
+       <div class="mb-3 ss">
+  <label for="exampleFormControl1" class="form-label text-dark"><i class="fas fa-envelope-open-text"></i>&nbsp&nbspEmail address<span class="text-warning">*</span></label>
+  <input type="email" class="form-control" th:classappend="${#fields.hasErrors('contact.email')?'is-invalid':''}"  id="exampleFormControl1" placeholder="name@example.com" name="email" th:value="${contact.email}">
+  <div th:each="f1:${#fields.errors('contact.email')}" th:text="${f1}"  class="invalid-feedback"></div>
+</div>
+
+<div class="mb-3 ss">
+  <label for="exampleFormControl2" class="form-label text-dark"><i class="fas fa-mobile"></i>&nbsp&nbspMobile Number<span class="text-warning">*</span></label>
+  <input type="text" class="form-control" th:classappend="${#fields.hasErrors('contact.phone')?'is-invalid':''}"  id="exampleFormControl2" placeholder="xxx-xxx-xxxx" name="phone" th:value="${contact.phone}">
+  <div th:each="f2:${#fields.errors('contact.phone')}" th:text="${f2}" class="invalid-feedback"></div>
+</div>
+
+<div class="mb-3 ss">
+  <label for="exampleFormControl3" class="form-label text-dark"><i class="fas fa-briefcase"></i>&nbsp&nbspWork<span class="text-warning">*</span></label>
+  <input type="text" class="form-control" th:classappend="${#fields.hasErrors('contact.work')?'is-invalid':''}"  id="exampleFormControl3" placeholder="Office" name="work" th:value="${contact.work}">
+    <div th:each="f3:${#fields.errors('contact.work')}" th:text="${f3}"   class="invalid-feedback"></div>
+</div>
+
+<div class="mb-3" id="up5">
+  <label for="formFile" class="form-label text-dark"><i class="fas fa-cloud-upload-alt"></i>&nbsp&nbspUpload Image</label>
+  <input class="form-control" type="file" id="formFile" name="profile3">
+</div>
+
+<div class="form-floating">
+  <textarea class="form-control" th:classappend="${#fields.hasErrors('contact.description')?'is-invalid':''}"  placeholder="Leave a comment here" id="mytextarea" style="height: 100px" name="description" th:value="${contact.description}"></textarea>
+  <label for="floatingTextarea2"><i class="far fa-comments"></i>&nbsp&nbspComments</label>
+   <div th:each="f4:${#fields.errors('contact.description')}" th:text="${f4}"  class="invalid-feedback"></div>
+</div>
+
+<div class="mt-3 text-center">
+<input type="submit" class="btn btn-warning" value="Save"></input><br>
+<a th:href="@{/user/show-Contact/0}" style="text-decoration:none;color:black;">Close</a>
+</div>
+        </form>
+        </div>
+     </div>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
+</body>
+</html>
